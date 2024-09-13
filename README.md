@@ -24,6 +24,7 @@ Please contact Integrations@ecoparcel.eu
 |`consignee_details`| `AddressBase` | *(mandatory)* |
 |`parcels`| `ParcelBase` | *(mandatory)* |
 |`collection_date`| *dateTime* 
+|`customer_reference`| *string* | 
 
 
 |AddressBase|||
@@ -93,7 +94,8 @@ Please contact Integrations@ecoparcel.eu
                 }
             ],
             "collection_date": "2024-07-31T14:00:00Z"
-        }
+        },
+        "confirm_and_pay": true
     ]
 }
 ```
@@ -101,12 +103,15 @@ Please contact Integrations@ecoparcel.eu
 ##### Response
 `label` returns labels of all orders combined into one PDF file
 
-###### Success 200
+###### Success 201 - Sufficient Funds to confirm_and_pay
+If `confirm_and_pay` was set as True and `paid` is True, that means that Order is confirmed and paid for.
+In a result, labels were generated and returned in the response.
 ```json
 {
     "orders": [
         {
             "id": "XXXXX",
+            "customer_reference": "XXXXX",
             "parcels": [
                 {
                     "id": "XXXXX01"
@@ -121,6 +126,52 @@ Please contact Integrations@ecoparcel.eu
         }
     ],
     "label": "BASE64 PDF"
+}
+```
+###### Success 201 - Insufficient Funds to confirm_and_pay
+If `confirm_and_pay` was set as `True` and the response `paid` is `False`, that means that Order was saved, but couldn't be paid for. 
+Saved unpaid order can be revised and paid for at the section "My Orders" at ecoparcel.eu.
+```json
+{
+    "orders": [
+        {
+            "id": "XXXXX",
+            "customer_reference": "XXXXX",
+            "parcels": [
+                {
+                    "id": "XXXXX01"
+                },
+                {
+                    "id": "XXXXX02"
+                }
+            ],
+            "collection_date": "2024-08-01T16:00:00+02:00",
+            "total_price": "40.92",
+            "paid": false
+        }
+    ],
+    "label": "BASE64 PDF"
+}
+```
+
+###### Bad Request 400
+```json
+{
+    "orders": [
+        {
+            "consignee_details": {
+                "city": [
+                    "This field is required."
+                ],
+                "phone": [
+                    "This field is required."
+                ],
+                "email_address": [
+                    "This field is required."
+                ]
+            }
+        }
+    ]
 }
 ```
 

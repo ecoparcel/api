@@ -95,6 +95,7 @@ Please contact Integrations@ecoparcel.eu
             ],
             "collection_date": "2024-07-31T14:00:00Z"
         },
+        "customer_reference": "SKU_001"
         "confirm_and_pay": true
     ]
 }

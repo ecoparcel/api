@@ -102,7 +102,7 @@ Please contact Integrations@ecoparcel.eu
 ```
 
 ##### Response
-`label` returns labels of all orders combined into one PDF file
+`labels` returns labels of all orders combined into one PDF file
 
 ###### Success 201 - Sufficient Funds to confirm_and_pay
 If `confirm_and_pay` was set as True and `paid` is True, that means that Order is confirmed and paid for.
@@ -126,12 +126,12 @@ In a result, labels were generated and returned in the response.
             "paid": true
         }
     ],
-    "label": "BASE64 PDF"
+    "labels": "BASE64 PDF"
 }
 ```
 ###### Success 201 - Insufficient Funds to confirm_and_pay
-If `confirm_and_pay` was set as `True` and the response `paid` is `False`, that means that Order was saved, but couldn't be paid for. 
-Saved unpaid order can be revised and paid for at the section "My Orders" at ecoparcel.eu.
+If `confirm_and_pay` was set as `True` and the response `paid` is `False`, that means that the Order was saved, but couldn't be paid for. 
+Saved unpaid orders can be revised and paid for at the "My Orders" section at ecoparcel.eu.
 ```json
 {
     "orders": [
@@ -151,7 +151,7 @@ Saved unpaid order can be revised and paid for at the section "My Orders" at eco
             "paid": false
         }
     ],
-    "label": "BASE64 PDF"
+    "labels": "BASE64 PDF"
 }
 ```
 
